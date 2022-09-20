@@ -1,0 +1,105 @@
+body{
+  font-family: "Poppins";
+
+}
+.gradient-custom-2 {
+  /* fallback for old browsers */
+  /* background: #7e40f6; */
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  /* background: -webkit-linear-gradient(
+    to right,
+    rgba(126, 64, 246, 1),
+    rgba(80, 139, 252, 1)
+  ); */
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  /* background: linear-gradient(
+    to right,
+    rgba(126, 64, 246, 1),
+    rgba(80, 139, 252, 1)
+    
+  ); */
+  background: rgb(126,64,246);
+background: linear-gradient(315deg, rgba(126,64,246,1) 0%, rgba(60,93,156,1) 100%);
+}
+
+.mask-custom {
+  background: rgba(24, 24, 16, 0.2);
+  border-radius: 2em;
+  backdrop-filter: blur(25px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+
+.card-body{
+  padding: 0 1rem;
+
+}
+ .form-control {
+  border-color: transparent;
+}
+.form-control:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+td{
+  vertical-align:middle;
+}
+h6{
+  margin: 0;
+}
+p{
+  margin: 0;
+}
+.status{
+  width: 10px;
+}
+
+#buttonfornewitem{
+  margin: 0 1rem;
+}
+.icon{
+
+  cursor: pointer;
+}
+.taskTitle{
+  background: transparent;
+  border: none;
+  color: white;
+  width: 100%;
+}
+
+.c9 { filter: hue-rotate(300deg) }
+
+input[type=checkbox] {
+  /* transform: scale(2); */
+  margin: 10px;
+  cursor: pointer;
+  box-shadow:none !important;
+}
+
+.fa-trash-alt{
+  color: white;
+  
+}
+.fa-trash-alt:hover{
+  color: #FF3F5B;
+}
+.fa-pencil{
+  color: white;
+  margin-right: 2rem;
+}
+.fa-pencil:hover{
+  color: #FFDA44;
+}
+.fa-check{
+  margin-right: 2rem;
+}
+.fa-check:hover{
+  color: #5892ff;
+}
+.hide{
+  display:none
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todos</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  <!-- JavaScript Bundle with Popper -->
+   <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet">
+  <!-- Fonts Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+
+<section class="vh-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-12 col-xl-10">
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-white">
+            <div class="text-center pt-3 pb-2">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60">
+              <h2 class="my-4">Task List</h2>
+            </div>
+            <div class="pb-2">
+              <div class="card">
+                <div class="card-body">
+                  <form>
+                  <div class="d-flex flex-row align-items-center">
+                    <input type="text" class="form-control form-control-lg" id="newlistitem" placeholder="Add new...">
+                    <div class="dropdown">
+                      <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Priority
+                      </button>
+                    </form>
+                      <div class="dropdown-menu" id="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#" at="success">Low Priority</a>
+                        <a class="dropdown-item" href="#" at="warning">Middle Priority</a>
+                        <a class="dropdown-item" href="#" at="danger">High Priority</a>
+                      </div>
+                    </div>
+                    <div>
+                      <button type="button" class="btn btn-light" id="buttonfornewitem" value="Add to list" onclick="readtask()"> + </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <table id="listforitems" class="table text-white">
+              <thead>
+                <tr>
+                  <th scope="col" class="col-1">Status</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Actions</th>
+                  <th scope="col">Created On</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- JavaScriptS file -->
+<script src="js/app.js"></script>
+<!-- <script>
+  // On app load, get all tasks from localStorage
+  window.onload = loadTasks;
+
+  // On form submit add task
+  document.querySelector("form").addEventListener("submit", e => {
+    e.preventDefault();
+    addTask();
+  });
+
+  function loadTasks() {
+    // check if localStorage has any tasks
+    // if not then return
+    if (localStorage.getItem("tasks") == null) return;
+
+    // Get the tasks from localStorage and convert it to an array
+    let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+
+    // Loop through the tasks and add them to the list
+    tasks.forEach(task => {
+      const list = document.querySelector("ul");
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox" onclick="taskComplete(this)" class="check" ${task.completed ? 'checked' : ''}>
+        <input type="text" value="${task.task}" class="task ${task.completed ? 'completed' : ''}" onfocus="getCurrentTask(this)" onblur="editTask(this)">
+        <i class="fa fa-trash" onclick="removeTask(this)"></i>`;
+      list.insertBefore(li, list.children[0]);
+    });
+  }
+
+  function addTask() {
+    const task = document.querySelector("form input");
+    const list = document.querySelector("ul");
+    // return if task is empty
+    if (task.value === "") {
+      alert("Please add some task!");
+      return false;
+    }
+    // check is task already exist
+    if (document.querySelector(`input[value="${task.value}"]`)) {
+      alert("Task already exist!");
+      return false;
+    }
+
+    // add task to local storage
+    localStorage.setItem("tasks", JSON.stringify([...JSON.parse(localStorage.getItem("tasks") || "[]"), { task: task.value, completed: false }]));
+
+    // create list item, add innerHTML and append to ul
+    const li = document.createElement("li");
+    li.innerHTML = `<input type="checkbox" onclick="taskComplete(this)" class="check">
+    <input type="text" value="${task.value}" class="task" onfocus="getCurrentTask(this)" onblur="editTask(this)">
+    <i class="fa fa-trash" onclick="removeTask(this)"></i>`;
+    list.insertBefore(li, list.children[0]);
+    // clear input
+    task.value = "";
+  }
+  
+  function taskComplete(event) {
+    let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+    tasks.forEach(task => {
+      if (task.task === event.nextElementSibling.value) {
+        task.completed = !task.completed;
+      }
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    event.nextElementSibling.classList.toggle("completed");
+  }
+
+  function removeTask(event) {
+    let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+    tasks.forEach(task => {
+      if (task.task === event.parentNode.children[1].value) {
+        // delete task
+        tasks.splice(tasks.indexOf(task), 1);
+      }
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    event.parentElement.remove();
+  }
+
+  // store current task to track changes
+  var currentTask = null;
+
+  // get current task
+  function getCurrentTask(event) {
+    currentTask = event.value;
+  }
+
+  // edit the task and update local storage
+  function editTask(event) {
+    let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+    // check if task is empty
+    if (event.value === "") {
+      alert("Task is empty!");
+      event.value = currentTask;
+      return;
+    }
+    // task already exist
+    tasks.forEach(task => {
+      if (task.task === event.value) {
+        alert("Task already exist!");
+        event.value = currentTask;
+        return;
+      }
+    });
+    // update task
+    tasks.forEach(task => {
+      if (task.task === currentTask) {
+        task.task = event.value;
+      }
+    });
+    // update local storage
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+</script> -->
+
+<body>
+
+</body>
+
+</html>
